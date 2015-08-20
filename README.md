@@ -1,5 +1,7 @@
 # single-key
 
+[![Build Status](https://travis-ci.org/eddieantonio/single-key.svg?branch=v0.1.0)](https://travis-ci.org/eddieantonio/single-key)
+
 Utilities for key-tagged values ([tagged unions][tu]).
 
 [tu]: https://en.wikipedia.org/wiki/Tagged_union
