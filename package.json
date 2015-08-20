@@ -1,0 +1,30 @@
+{
+  "name": "single-key",
+  "version": "0.0.0",
+  "description": "Utilities for key-tagged values (tagged unions).",
+  "main": "lib/index.js",
+  "scripts": {
+    "compile": "babel -d lib/ src/",
+    "prepublish": "npm run compile",
+    "test": "jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eddieantonio/single-key.git"
+  },
+  "keywords": [
+    "tagged-union",
+    "utilties",
+    "single-key"
+  ],
+  "author": "Eddie Antonio Santos <easantos@ualberta.ca> (http://eddieantonio.ca/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eddieantonio/single-key/issues"
+  },
+  "homepage": "https://github.com/eddieantonio/single-key#readme",
+  "devDependencies": {
+    "babel": "^5.8.21",
+    "jasmine": "^2.3.2"
+  }
+}
