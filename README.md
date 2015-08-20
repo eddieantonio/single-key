@@ -1,6 +1,6 @@
 # single-key
 
-[![Build Status](https://travis-ci.org/eddieantonio/single-key.svg?branch=v0.1.0)](https://travis-ci.org/eddieantonio/single-key)
+[![Build Status](https://travis-ci.org/eddieantonio/single-key.svg?branch=master)](https://travis-ci.org/eddieantonio/single-key)
 
 Utilities for key-tagged values ([tagged unions][tu]).
 
