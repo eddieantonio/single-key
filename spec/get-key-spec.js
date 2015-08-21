@@ -47,5 +47,28 @@ describe('getKey', () => {
         getKey(obj);
       }).toThrowError(NonConformingError);
     });
+
+    it('fails when passed an object with no enumerable properties', () => {
+      let obj = Object.create(null, {
+        theKey: {
+          value: 'value',
+          enumerable: false
+        }
+      });
+
+      expect(() => {
+        getKey(obj);
+      }).toThrowError(NonConformingError);
+
+      obj = { theKey: 'value' };
+      expect(getKey(obj)).toBe('theKey');
+      Object.defineProperty(obj, 'theKey', {
+        enumerable: false
+      });
+
+      expect(() => {
+        getKey(obj);
+      }).toThrowError(NonConformingError);
+    });
   });
 });
