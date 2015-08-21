@@ -32,6 +32,21 @@ export function getKey(obj) {
 }
 
 /**
+ * Given any value, returns whether this value is a conforming key-tagged
+ * value. That is, an object with exactly one enumerable property.
+ *
+ * @param {*} val any value
+ * @return {boolean} true if the object is a suitable key-tagged value.
+ */
+export function isKeyTaggedValue(val) {
+  return (
+    typeof val === 'object' &&
+    val !== null &&
+    Object.keys(val).length === 1
+  );
+}
+
+/**
  * Returns an array of the key and value from the key-tagged value.
  *
  * @param {object} obj key-tagged value.
