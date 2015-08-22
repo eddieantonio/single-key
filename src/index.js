@@ -1,7 +1,8 @@
 /**
  * @file
+ *
  * Utilities for "key-tagged values": An object with a single-key, hinting at
- * its value. May be useful for tagged unions.
+ * its value. Useful for tagged unions.
  */
 
 /**
@@ -18,7 +19,7 @@ export class MatchError extends TypeError {
 
 /**
  * @param {object} obj key-tagged value.
- * @return {(string|symbol)} the key of object.
+ * @return {string} the key of object.
  * @throws NonConformingError when obj is not a key-tagged value.
  */
 export function getKey(obj) {
@@ -62,7 +63,7 @@ export function unpack(obj) {
  * Like unpack(), but returns an object with key and value.
  *
  * @param {object} obj key-tagged value.
- * @return {{key, value}} An object with two elements.
+ * @return {{key: string, value}} An object with properties `key` and `value`.
  * @throws NonConformingError when obj is not a key-tagged value.
  */
 export function unpackObject(obj) {
@@ -77,9 +78,9 @@ export function unpackObject(obj) {
  * It's similar to switch statement on the key name. Unlike a switch
  * statement, it has a return value, and it may only run one case per call.
  *
- * @param {object} obj  key-tagged value.
- * @param {object} map  a map of possible keys to the callback that should be
- *                      invoked when the key is matched.
+ * @param {object} obj key-tagged value.
+ * @param {object} map a map of possible keys to the callback that should be
+ *                     invoked when the key is matched.
  * @return {?} The return of the matched callback.
  * @throws Error When there is no match
  * @throws NonConformingError when obj is not a key-tagged value.
