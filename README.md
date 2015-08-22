@@ -13,9 +13,28 @@ Utilities for key-tagged values ([tagged unions][tu]).
 
 [TypeError]: http://www.ecma-international.org/ecma-262/6.0/#sec-native-error-types-used-in-this-standard-typeerror
 
+## isKeyTaggedValue
+
+> `isKeyTaggedValue(val: ?): Boolean`
+
+Returns true if the value conforms to the key-tagged value protocol.
+That is, it returns true if `val`:
+
+ * is an object (note, an array counts as an object)
+ * contains exactly *one* enumerable property name according to
+   `Object.keys()` (note: symbols don't count as names, even if they are
+   enumerable)
+
+Otherwise, returns false.
+
+```javascript
+let obj = { foo: 'bar' };
+assert(isKeyTaggedValue(obj);
+```
+
 ## `unpack`
 
-> `unpack(obj: Object): [key: String|Symbol, value: ?]`
+> `unpack(obj: Object): [key: String, value: ?]`
 
 Returns an array of two elements: the key and the value from the
 key-tagged value.
@@ -30,7 +49,7 @@ assert(value === 42);
 
 ## `unpackObject`
 
-> `unpackObject(obj: Object): {key: String|Symbol, value: ?}`
+> `unpackObject(obj: Object): {key: String, value: ?}`
 
 Same as [unpack](#unpack), but returns an object with keys, `key` and
 `value`:
@@ -62,4 +81,13 @@ let value = onKey(obj, {
 });
 
 assert(value === 'magic');
+
+try {
+  onKey(obj, {
+    herp: () => 'derp',
+    foo: () => 'bar'
+  });
+} catch (err) {
+
+}
 ```
