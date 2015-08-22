@@ -1,6 +1,11 @@
 /*global describe, it, expect*/
 import {isKeyTaggedValue} from '../src';
 
+const shouldDoSymbolTests = (
+  typeof Symbol !== undefined &&
+  Object.keys({[Symbol.iterator]: 1 }) === 0
+);
+
 describe('isKeyTaggedValue', () => {
   it('returns true for single key objects', () => {
     expect(isKeyTaggedValue({key: 'value'})).toBe(true);
@@ -13,7 +18,7 @@ describe('isKeyTaggedValue', () => {
     expect(isKeyTaggedValue(new Foo())).toBe(true);
   });
 
-  if (typeof Symbol !== 'undefined') {
+  if (shouldDoSymbolTests) {
     it('returns false for an object with single keys', () => {
       expect(isKeyTaggedValue({[Symbol.iterator]: 'value'})).toBe(false);
     });
@@ -37,7 +42,7 @@ describe('isKeyTaggedValue', () => {
     expect(isKeyTaggedValue(false)).toBe(false);
     expect(isKeyTaggedValue('')).toBe(false);
     expect(isKeyTaggedValue('foo')).toBe(false);
-    if (typeof Symbol !== 'undefined') {
+    if (shouldDoSymbolTests) {
       expect(isKeyTaggedValue(Symbol.iterator)).toBe(false);
     }
     expect(isKeyTaggedValue(NaN)).toBe(false);
