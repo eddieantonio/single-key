@@ -49,23 +49,52 @@ describe('getKey', () => {
     });
 
     it('fails when passed an object with no enumerable properties', () => {
+      /* 1: Set non-enumerable in Object.create */
       let obj = Object.create(null, {
         theKey: {
-          value: 'value',
-          enumerable: false
+          value: 'value'
+          /* Default is enumberable: false. */
         }
       });
-
       expect(() => {
         getKey(obj);
       }).toThrowError(NonConformingError);
 
+      /* 2: With syntax for getters in object intializers. */
+      /*
+       * Getters in object literals are enumerable by default:
+       * http://www.ecma-international.org/ecma-262/6.0/#sec-object-initializer-runtime-semantics-evaluation
+       */
+      obj = {
+        get theKey() {
+          return 'value';
+        }
+      };
+      expect(getKey(obj)).toBe('theKey');
+
+      /* 3: With syntax for getters in classes. */
+      /*
+       * In class defintions, however, getters are not enumerable:
+       * http://www.ecma-international.org/ecma-262/6.0/#sec-runtime-semantics-classdefinitionevaluation
+       */
+      class FooClass {
+        get theKey() {
+          return 'value';
+        }
+      }
+      expect(() => {
+        getKey(FooClass.prototype);
+      }).toThrowError(NonConformingError);
+
+      /* Counter example: a simple object. */
       obj = { theKey: 'value' };
       expect(getKey(obj)).toBe('theKey');
+
+      /* 4: Setting enumerable: false after the fact. */
       Object.defineProperty(obj, 'theKey', {
         enumerable: false
       });
-
+      expect(obj.theKey).toBe('value');
       expect(() => {
         getKey(obj);
       }).toThrowError(NonConformingError);
