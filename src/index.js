@@ -12,7 +12,7 @@ export class NonConformingError extends TypeError {
 }
 
 /**
- * Thrown when a onKey() found no matching key.
+ * Thrown when a match() found no matching key.
  */
 export class MatchError extends TypeError {
 }
@@ -85,7 +85,7 @@ export function unpackObject(obj) {
  * @throws Error When there is no match
  * @throws NonConformingError when obj is not a key-tagged value.
  */
-export function onKey(obj, map) {
+export function match(obj, map) {
   const key = getKey(obj);
   const action = map[key];
 
@@ -95,4 +95,12 @@ export function onKey(obj, map) {
 
   /* Invoke the action. */
   return action(obj[key], obj);
+}
+
+/**
+ * Alias for match().
+ * @deprecated
+ */
+export function onKey(...args) {
+  return match(...args);
 }

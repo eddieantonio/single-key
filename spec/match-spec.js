@@ -1,15 +1,15 @@
 /*global describe,it,expect*/
 
-import {onKey, MatchError} from '../src';
+import {match, MatchError} from '../src';
 
-describe('onKey', () => {
+describe('match', () => {
   it('matches a key, and runs its callback immediately', () => {
     const obj = { grant: 'denasty' };
     /* Assigning to this will be a detectable side-effect, knowing for sure
      * the callback was called. */
     var wildcard;
 
-    onKey(obj, {
+    match(obj, {
       trevor() {
         wildcard = 'vampire killer';
       },
@@ -29,7 +29,7 @@ describe('onKey', () => {
   it("matches a key, and returns its callback's result", () => {
     const obj = { sypha: 'belnades' };
 
-    const value = onKey(obj, {
+    const value = match(obj, {
       trevor: () => 'vampire killer',
       sypha: () => 'magic',
       grant: () => 'daggers'
@@ -42,7 +42,7 @@ describe('onKey', () => {
     const obj = { alucard: 'dracula' };
 
     expect(() => {
-      onKey(obj, {
+      match(obj, {
         trevor: () => 'vampire killer',
         sypha: () => 'magic',
         grant: () => 'daggers'
