@@ -32,6 +32,36 @@ let obj = { foo: 'bar' };
 assert(isKeyTaggedValue(obj);
 ```
 
+## `match`
+
+> `match(obj: Object, callbacks: Object): ?`
+
+Like a switch statement on the key. Given a key-tagged value and an
+object of callbacks, calls the callback whose name matches the key.
+`match()` returns the result of the matching callback.
+
+Throws `MatchError` when no callback is matched.
+
+
+```javascript
+let obj = { sypha: 'belnades' };
+let value = onKey(obj, {
+  trevor: () => 'vampire killer',
+  sypha: () => 'magic',
+  grant: () => 'daggers'
+});
+
+assert(value === 'magic');
+
+try {
+  onKey(obj, {
+    alucard: () => 'turning into a flippin bat'
+  });
+} catch (err) {
+  assert(err instanceof MatchError);
+}
+```
+
 ## `unpack`
 
 > `unpack(obj: Object): [key: String, value: ?]`
@@ -61,33 +91,3 @@ assert(key === 'content');
 assert(value === 42);
 ```
 
-## `onKey`
-
-> `onKey(obj: Object, callbacks: Object): ?`
-
-Like a switch statement on the key. Given a key-tagged value and an
-object of callbacks, calls the callback associated with the key,
-returning the callback's return value.
-
-Throws `MatchError` when no callback is matched.
-
-
-```javascript
-let obj = { sypha: 'belnades' };
-let value = onKey(obj, {
-  trevor: () => 'vampire killer',
-  sypha: () => 'magic',
-  grant: () => 'daggers'
-});
-
-assert(value === 'magic');
-
-try {
-  onKey(obj, {
-    herp: () => 'derp',
-    foo: () => 'bar'
-  });
-} catch (err) {
-
-}
-```
