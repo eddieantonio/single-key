@@ -1,6 +1,14 @@
 language: node_js
 sudo: false
 node_js:
-  - "stable"
-  - "iojs"
-  - "0.10"
+- stable
+- iojs
+- '0.10'
+deploy:
+  provider: npm
+  email: easantos@ualberta.ca
+  api_key:
+    secure: OsFWDkujj2Z36xdhIQoFwravsEY27Z17HLVvI3sK1hIMRdX8WWY4Do0EyaOTDGJQKdmqbMUoEhhcwYE76YLyn8uujg0D/+NIWzVMsYY6q338LeZlvAmYAiiA7H9ooLw7ZIKj7yNo88LeW4yms5tcStSJfIfgBE6IssMzWr9sDl4G5ECe85OU7V7H3YaNN4Xi869f8hIm9HpQf0zu0tOugtOHf2jfwbXVqMJCqz8kZ+CDoDcJe/oSW8soKiIuOSCKhDQoxcBRhPIttYKfmDtAorI3pdMnk1rBEvczIYWfMLiNgrKI8ZgKWofOPhWpgd9RAyxR5ZbgIAxgBaHOt06NsS5Xv3muOXiAQVkmlbKCwjWbFBVyhP4wqnup0ua80hIr36syemuuK50hM58SAiWBU2hGl+YmaxjEqI/UzH9cV/pF4Z1re6WH76KcPImP6dDg6v3amQzaZ4BFrsPKA35ong+lYu+0UkKggN88xUTWfFncDG8onGovBOjz5hCEGneFlceT/DL7tW2YG+eigq35IVKaAOK0YcL48pnCKLgQUMaCevUUaA5C31heDZuSi/WGAjQb3pONMn2UQUDkx1MvjEVVGi5lwZYR98pQg1u1BDHonC1333HtZJoldU7wns3AeJaYKwgGNd3Ld/5dqVK507aS2RHm+vaSTE/gB/bk6sk=
+  on:
+    tags: true
+    repo: eddieantonio/single-key
