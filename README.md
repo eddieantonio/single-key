@@ -29,23 +29,31 @@ Otherwise, returns false.
 
 ```javascript
 let obj = { foo: 'bar' };
-assert(isKeyTaggedValue(obj);
+assert(isKeyTaggedValue(obj));
+
+let obj = { foo: 'bar', 'herp': 'derp'};
+assert(isKeyTaggedValue(obj) === false);
+
+let obj = { [Symbol.iterator]: function*() { yield 'foo'; } };
+assert(isKeyTaggedValue(obj) === false);
 ```
 
 ## `match`
 
-> `match(obj: Object, callbacks: Object): ?`
+> `match(obj: Object, callbacks: Object, otherwise: function): ?`
 
 Like a switch statement on the key. Given a key-tagged value and an
 object of callbacks, calls the callback whose name matches the key.
-`match()` returns the result of the matching callback.
+`match()` returns the result of the matching callback. An optional third
+parameter is called when no match can be made.
 
-Throws `MatchError` when no callback is matched.
-
+Throws `MatchError` when no callback is matched, and no third parameter
+is given.
 
 ```javascript
+/* Standard match. */
 let obj = { sypha: 'belnades' };
-let value = onKey(obj, {
+let value = match(obj, {
   trevor: () => 'vampire killer',
   sypha: () => 'magic',
   grant: () => 'daggers'
@@ -53,13 +61,27 @@ let value = onKey(obj, {
 
 assert(value === 'magic');
 
+/* No match found for the object. */
 try {
-  onKey(obj, {
-    alucard: () => 'turning into a flippin bat'
+  match(obj, {
+    alucard: (val, key) => 'turning into a flippin bat'
   });
 } catch (err) {
   assert(err instanceof MatchError);
 }
+
+
+/* Default provided to avoid match error.. */
+let value = match(obj,
+  {
+    alucard: (val, key) => 'turning into a flippin bat'
+  },
+  (val, key) => {
+    return "No one knows.";
+  }
+);
+
+assert(value === "No one knows.");
 ```
 
 ## `unpack`
