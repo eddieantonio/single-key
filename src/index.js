@@ -72,29 +72,37 @@ export function unpackObject(obj) {
 }
 
 /**
- * Runs an action depending on the SINGLE key in the object.  Throws if the
+ * Runs an action depending on the single key in the object. Throws if the
  * object has more than one key, or if there is no action given for the key.
  *
  * It's similar to switch statement on the key name. Unlike a switch
  * statement, it has a return value, and it may only run one case per call.
  *
+ * The callback matched is called with the value, and the key, respectively.
+ *
  * @param {object} obj key-tagged value.
  * @param {object} map a map of possible keys to the callback that should be
  *                     invoked when the key is matched.
+ * @param {function} otherwise called on match failure; it should have the
+ * same signature as a function given in `map`.
  * @return {?} The return of the matched callback.
- * @throws Error When there is no match
+ * @throws MatchError When there is no match, and no third parameter is
+ * provided.
  * @throws NonConformingError when obj is not a key-tagged value.
  */
-export function match(obj, map) {
-  const key = getKey(obj);
+export function match(obj, map, otherwise) {
+  const [key, val] = unpack(obj);
   const action = map[key];
 
   if (!(action instanceof Function)) {
+    if (otherwise instanceof Function) {
+      return otherwise(val, key);
+    }
     throw new MatchError(`No action provided for key: ${key}`);
   }
 
   /* Invoke the action. */
-  return action(obj[key], obj);
+  return action(val, key);
 }
 
 /**
