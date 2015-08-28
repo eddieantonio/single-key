@@ -8,8 +8,9 @@ Utilities for key-tagged values ([tagged unions][tu]).
 
 # API
 
-**NOTE**: All functions throw `NonConformingError`, a subtype of
-[TypeError][] when the argument is not a key-tagged value.
+**NOTE**: All functions (except `isKeyTaggedValue`) throw
+`NonConformingError`—a subtype of [TypeError][]—when the argument is not
+a key-tagged value.
 
 [TypeError]: http://www.ecma-international.org/ecma-262/6.0/#sec-native-error-types-used-in-this-standard-typeerror
 
@@ -40,14 +41,17 @@ assert(isKeyTaggedValue(obj) === false);
 
 ## `match`
 
-> `match(obj: Object, callbacks: Object, otherwise: function): ?`
+> `match(obj: Object, cases: Object, otherwise: function|undefined): ?`
 
-Like a switch statement on the key. Given a key-tagged value and an
-object of callbacks, calls the callback whose name matches the key.
-`match()` returns the result of the matching callback. An optional third
+Similar to a switch statement on the key. Given a key-tagged value and
+an object of function, calls the function whose name matches the key.
+`match()` returns the result of the called function. An optional third
 parameter is called when no match can be made.
 
-Throws `MatchError` when no callback is matched, and no third parameter
+The provided functions (including the third parameter) are called with
+the value of the key-tagged value, and the key, respectively.
+
+Throws `MatchError` when no callback is matched and no third parameter
 is given.
 
 ```javascript
@@ -71,7 +75,7 @@ try {
 }
 
 
-/* Default provided to avoid match error.. */
+/* Default provided to suppress MatchError. */
 let value = match(obj,
   {
     alucard: (val, key) => 'turning into a flippin bat'
