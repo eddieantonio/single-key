@@ -14,7 +14,7 @@ export class NonConformingError extends TypeError {
 /**
  * Thrown when a match() found no matching key.
  */
-export class MatchError extends TypeError {
+export class MatchError extends Error {
 }
 
 /**
