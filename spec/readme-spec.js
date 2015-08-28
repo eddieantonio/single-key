@@ -6,6 +6,11 @@ import {
   MatchError, NonConformingError
 } from '../src';
 
+const shouldSkipSymbolTests = (
+  typeof Symbol !== 'undefined' ||
+  Object.keys({[Symbol.iterator]: 1 }) !== 0
+);
+
 describe('The README', () => {
   it('has a working example for isKeyTaggedValue() ', () => {
     let obj = { foo: 'bar' };
@@ -13,6 +18,10 @@ describe('The README', () => {
 
     obj = { foo: 'bar', 'herp': 'derp'};
     assert(isKeyTaggedValue(obj) === false);
+
+    if (shouldSkipSymbolTests) {
+      return;
+    }
 
     obj = { [Symbol.iterator]: function*() { yield 'foo'; } };
     assert(isKeyTaggedValue(obj) === false);

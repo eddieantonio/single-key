@@ -2,7 +2,7 @@
 import {isKeyTaggedValue} from '../src';
 
 const shouldDoSymbolTests = (
-  typeof Symbol !== undefined &&
+  typeof Symbol !== 'undefined' &&
   Object.keys({[Symbol.iterator]: 1 }) === 0
 );
 

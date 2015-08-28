@@ -1,6 +1,11 @@
 /*global describe, it, expect*/
 import {getKey, NonConformingError} from '../src';
 
+const shouldSkipSymbolTests = (
+  typeof Symbol !== 'undefined' ||
+  Object.keys({[Symbol.iterator]: 1 }) !== 0
+);
+
 describe('getKey', () => {
   it('gets key from a key-tagged value', () => {
     const obj = {
@@ -117,11 +122,13 @@ describe('getKey', () => {
         getKey('');
       }).toThrowError(NonConformingError);
 
-      if (typeof Symbol !== undefined) {
-        expect(() => {
-          getKey(Symbol.iterator);
-        }).toThrowError(NonConformingError);
+      if (shouldSkipSymbolTests) {
+        return;
       }
+
+      expect(() => {
+        getKey(Symbol.iterator);
+      }).toThrowError(NonConformingError);
     });
   });
 });
