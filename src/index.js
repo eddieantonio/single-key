@@ -104,11 +104,3 @@ export function match(obj, map, otherwise) {
   /* Invoke the action. */
   return action(val, key);
 }
-
-/**
- * Alias for match().
- * @deprecated
- */
-export function onKey(...args) {
-  return match(...args);
-}
