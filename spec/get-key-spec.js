@@ -99,5 +99,29 @@ describe('getKey', () => {
         getKey(obj);
       }).toThrowError(NonConformingError);
     });
+
+    it('fails when passed null and non-objects', () => {
+      expect(() => {
+        getKey(null);
+      }).toThrowError(NonConformingError);
+
+      expect(() => {
+        getKey();
+      }).toThrowError(NonConformingError);
+
+      expect(() => {
+        getKey(NaN);
+      }).toThrowError(NonConformingError);
+
+      expect(() => {
+        getKey('');
+      }).toThrowError(NonConformingError);
+
+      if (typeof Symbol !== undefined) {
+        expect(() => {
+          getKey(Symbol.iterator);
+        }).toThrowError(NonConformingError);
+      }
+    });
   });
 });

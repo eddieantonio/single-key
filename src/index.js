@@ -23,7 +23,15 @@ export class MatchError extends Error {
  * @throws NonConformingError when obj is not a key-tagged value.
  */
 export function getKey(obj) {
-  const keys = Object.keys(obj);
+  var keys;
+  try {
+    keys = Object.keys(obj);
+  } catch (err) {
+    throw new NonConformingError(
+      `Given argument of unexpected type: ${typeof obj}`
+    );
+  }
+
   if (keys.length !== 1) {
     throw new NonConformingError(
       `Expected exactly one key but found ${keys.length}`
