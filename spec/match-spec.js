@@ -1,6 +1,6 @@
 /*global describe,it,expect,pending*/
 
-import {match, MatchError} from '../src';
+import {match, otherwise, MatchError} from '../src';
 
 describe('match', () => {
   it('matches a key, and runs its callback immediately', () => {
@@ -81,5 +81,20 @@ describe('match', () => {
     );
 
     expect(answer).toBe("I don't know what to do with alucard tepes");
+  });
+
+  it('calls `otherwise` when no match is made', () => {
+    const obj = { 'otherwise': 'this is a test case' };
+
+    const answer = match(obj, {
+      trevor: () => 'vampire killer',
+      sypha: () => 'magic',
+      grant: () => 'daggers',
+      [otherwise]: (value, key) =>
+        `I don't know what to do with ${key} ${value}`
+    });
+
+    expect(answer)
+      .toBe("I don't know what to do with otherwise this is a test case");
   });
 });

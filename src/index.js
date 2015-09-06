@@ -17,6 +17,8 @@ export class NonConformingError extends TypeError {
 export class MatchError extends Error {
 }
 
+export const otherwise = Symbol('singleKey.otherwise');
+
 /**
  * @param {object} obj key-tagged value.
  * @return {string} the key of object.
@@ -98,13 +100,15 @@ export function unpackObject(obj) {
  * provided.
  * @throws NonConformingError when obj is not a key-tagged value.
  */
-export function match(obj, map, otherwise) {
+export function match(obj, map, otherwiseFn) {
   const [key, val] = unpack(obj);
   const action = map[key];
 
   if (!(action instanceof Function)) {
-    if (otherwise instanceof Function) {
-      return otherwise(val, key);
+    /* Use the function provided in the map. */
+    otherwiseFn = otherwiseFn || map[otherwise];
+    if (otherwiseFn instanceof Function) {
+      return otherwiseFn(val, key);
     }
     throw new MatchError(`No action provided for key: ${key}`);
   }
